@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Configuration view for Enable/Disable Website Product Dimension -->
+    <record id="view_website_config_settings_inherit" model="ir.ui.view">
+        <field name="name">Website Product Dimension Settings</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='comparator_option_setting']" position="after">
+                <div class="col-12 col-lg-6 o_setting_box" id="product_dimension_setting">
+                    <div class="o_setting_left_pane">
+                        <field name="enable_website_dimension"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="enable_website_dimension"/>
+                        <div class="text-muted">
+                            Allow shoppers to adjust product dimensions on website order.
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
