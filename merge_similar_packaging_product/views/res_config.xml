@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
         <record id="inherit_res_config_settings_view_form" model="ir.ui.view">
             <field name="name">res.config.settings.view.form.inherit.sale</field>
             <field name="model">res.config.settings</field>
@@ -25,10 +24,5 @@
                 </xpath>
             </field>
         </record>
-
-
-        
-
-
     </data>
 </odoo>

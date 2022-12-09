@@ -9,8 +9,7 @@
                 <xpath expr="//page[@name='note']" position="after">
                     <page string="Packaging Info" name="Packaging_info">
                         <field name="description">
-                        </field>
-                        
+                        </field>                        
                     </page>
                 </xpath>
             </field>
@@ -42,8 +41,5 @@
                 records.action_merge_mo()
             </field>
         </record>
-
-
-
     </data>
 </odoo>

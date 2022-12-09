@@ -68,7 +68,6 @@ class ResConfigSettings(models.TransientModel):
             'type':'product',
             'uom_id':1,
             'description_sale':'A dummy Packaged Product',
-            'route_ids':[1,11]
         })
 
         self.env['product.packaging'].sudo().create({
@@ -93,8 +92,7 @@ class ResConfigSettings(models.TransientModel):
 
     @api.model
     def demo_data_sale_order(self):
-        rec_product=self.env['product.product'].sudo().search([('type','=','product'),('route_ids','in',[1,11]),]).filtered(lambda rec:True if len(rec.packaging_ids)>0 else False)
-
+        rec_product=self.env['product.product'].sudo().search([('type','=','product'),('name','ilike','Test Product'),]).filtered(lambda rec:True if len(rec.packaging_ids)>0 else False)
         rec_so=self.env['sale.order'].sudo().create({
             'partner_id':10,
         })
@@ -102,28 +100,28 @@ class ResConfigSettings(models.TransientModel):
             'product_id':rec_product[0].id,
             'name':rec_product[0].description_sale,
             'product_uom_qty':rec_product[0].packaging_ids[0].qty*2.0,
-            'product_packaging':rec_product[0].packaging_ids[0].id,
+            'product_packaging_id':rec_product[0].packaging_ids[0].id,
             'order_id':rec_so.id,
         })
         self.env['sale.order.line'].sudo().create({
             'product_id':rec_product[0].id,
             'name':rec_product[0].description_sale,
             'product_uom_qty':rec_product[0].packaging_ids[1].qty*3.0,
-            'product_packaging':rec_product[0].packaging_ids[1].id,
+            'product_packaging_id':rec_product[0].packaging_ids[1].id,
             'order_id':rec_so.id,
         })
         self.env['sale.order.line'].sudo().create({
             'product_id':rec_product[1].id,
             'name':rec_product[1].description_sale,
             'product_uom_qty':rec_product[1].packaging_ids[0].qty*2.0,
-            'product_packaging':rec_product[1].packaging_ids[0].id,
+            'product_packaging_id':rec_product[1].packaging_ids[0].id,
             'order_id':rec_so.id,
         })
         self.env['sale.order.line'].sudo().create({
             'product_id':rec_product[1].id,
             'name':rec_product[1].description_sale,
             'product_uom_qty':rec_product[1].packaging_ids[1].qty*1.0,
-            'product_packaging':rec_product[1].packaging_ids[1].id,
+            'product_packaging_id':rec_product[1].packaging_ids[1].id,
             'order_id':rec_so.id,
         })
         rec_so.action_confirm()

@@ -2,8 +2,7 @@
 <odoo>
     <data>
 
-         <function model="res.config.settings" name="action_wk_set_packaging_option"/>
-
+        <function model="res.config.settings" name="action_wk_set_packaging_option"/>
 
         <record id="product.group_stock_packaging" model="res.groups">
            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
@@ -11,7 +10,6 @@
         <record id="stock.group_tracking_lot" model="res.groups">
            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
         </record>
-
 
         <function  model="res.config.settings" name="demo_data_product">
             <value>packaged product 1(Test Product)</value>    
