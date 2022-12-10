@@ -61,7 +61,7 @@
                             </h4>
                         </div>
                     </div>
-                <p class="alert alert-warning mb-4" style="font-size:88%">First textbox is considered height, second weight.</p>
+                <p class="alert alert-warning mb-4" style="font-size:88%">Primer textbox es considerado altura, segundo peso.</p>
             </t>
         </xpath>
     </template>
