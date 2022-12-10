@@ -33,7 +33,7 @@
             <t t-if="request.env['ir.config_parameter'].sudo().get_param('bi_website_dimension.enable_website_product_dimension', False)">
                 <div class="row">
 					<div class="form-group col-lg-3">
-	                    <input type="text" class="form-control text-center" name="height" placeholder="Altura"
+	                    <input type="text" class="form-control text-center" name="height" placeholder="Alto"
 	                           style="width: 65%;" autocomplete="off">
 	                    </input>
                 	</div>
