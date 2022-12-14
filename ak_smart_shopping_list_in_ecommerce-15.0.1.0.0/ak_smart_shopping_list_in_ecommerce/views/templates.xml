@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--My Shopping list menu-->
+    <template id="my_shopping_list" name="Link to frontend portal" inherit_id="portal.user_dropdown">
+        <xpath expr="//*[@id='o_logout_divider']" position="before">
+            <a href="/my/shopping/list" role="menuitem" class="dropdown-item">My Shopping List</a>
+        </xpath>
+    </template>
+
+    <!-- Add to shopping list button -->
+    <template id="add_shopping_list_button_products_item" inherit_id="website_sale.product">
+        <xpath expr="//a[@id='add_to_cart']" position="after">
+            <a role="button" class="btn btn-primary btn-lg mt16 d-block d-sm-inline-block text-center text-white" id="wishlist_btn" groups="base.group_portal,base.group_user">
+                <i class="fa fa-heart"></i>Add to Shopping List
+            </a>
+        </xpath>
+    </template>
+    
+    <!-- Shopping list page-->
+    <template id="my_shopping_list_template" name="My Shopping List">
+        <t t-call="portal.frontend_layout">
+            
+            <div class="container" id="shipping_list_container">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col">
+                        
+                        <div class="mb-3 mt-3">
+                            <button type="submit" class="btn btn-primary text-center" id="create_shopping_list">Create Shopping List</button>
+                        </div>
+
+                        <div class="accordion mb-3" id="shopping_list_accordion">
+                            <t t-foreach="shopping_lists" t-as="shopping_list">
+                                <div class="card shopping_list_card">
+                                    <div class="card-header shopping_list_card_header" t-attf-id="accordion_#{shopping_list.id}">
+                                        
+                                        <div class="row">
+                                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col list_btn">
+                                                <button class="btn btn-primary accordion_button collapsed" type="button" data-toggle="collapse" t-attf-data-target="#collapse_id_#{shopping_list.id}" aria-expanded="false" t-attf-aria-controls="collapse_id_#{shopping_list.id}"  t-att-disabled="shopping_list.total_items == 0 and True or False">
+                                                    <i class="fa fa-angle-down"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-5 col product_name">
+                                                <span class="text-muted" t-esc="shopping_list.name" />
+                                                <span class="text-muted mobile_product_item d-none">Items: <span t-esc="shopping_list.total_items" /></span>
+                                                <t t-if="shopping_list.total_items > 0">
+                                                    <span class="text-muted mobile_accordian_cart accordian_cart d-none" t-att-data-id=" shopping_list.id">Add to cart</span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span class="text-muted mobile_accordian_cart accordian_cart d-none">Add to cart</span>
+                                                </t>
+                                                <span class="text-muted mobile_accordian_delete accordian_delete d-none" t-att-data-id=" shopping_list.id" >Delete</span>
+                                            </div>
+                                            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col list_area">
+                                                <div class="row list_row">
+                                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col">
+                                                        <span class="text-muted product_item">Items: <span t-esc="shopping_list.total_items" /></span>
+                                                    </div>
+                                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col list_button">
+                                                        <button class="btn btn-primary fa fa-shopping-cart accordian_cart" t-att-data-id=" shopping_list.id" 
+                                                        t-att-disabled="shopping_list.total_items == 0 and True or False"/>
+                                                    </div>
+                                                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col list_button">
+                                                        <button class="btn btn-primary fa fa-trash accordian_delete" t-att-data-id=" shopping_list.id" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div t-attf-id="collapse_id_#{shopping_list.id}" class="collapse" t-attf-aria-labelledby="accordion_#{shopping_list.id}" data-parent="#shopping_list_accordion">
+                                        <div class="card-body shopping_list_card_body">
+                                            <t t-set="line_ids" t-value="shopping_list.line_ids" />
+                                            <div class="table-responsive shopping_list_table">
+                                                <table class="table table-borderless table-hover" id="shopping_list_table">
+                                                    <thead class="thead shopping-list-thead">
+                                                        <tr>
+                                                            <th class="th_img text-center">Product</th>
+                                                            <th class="th_product text-center"></th>
+                                                            <th class="text-center">Quantity</th>
+                                                            <th class="text-right">Cart</th>
+                                                            <th class="text-right">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <t t-foreach="line_ids" t-as="line">
+                                                            
+                                                                <tr t-att-data-line_id="line.id" id="line_id">
+                                                                    <td class='td_img'>
+                                                                        <span t-field="line.product_id.image_128" t-options="{'widget': 'image', 'qweb_img_responsive': False, 'class': 'rounded o_image_64_max'}" />
+                                                                    </td>
+                                                                    <td class="td_product">
+                                                                        <a t-att-href="line.product_id.website_url">
+                                                                            <strong t-field="line.product_id.display_name" />
+                                                                        </a>
+                                                                    </td>
+                                                                    <td class="td-qty">
+                                                                        <div class="css_quantity input-group mx-auto">
+                                                                            <div class="input-group-prepend sub_qty_shoppinglist js_add_sub_qty">
+                                                                                <a t-attf-href="#" class="btn btn-link js_add_cart_json d-none d-md-inline-block" aria-label="Remove one" title="Remove one">
+                                                                                    <i class="fa fa-minus"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                            <input type="text" class="quantity_js form-control text-center input_qty" data-min="1" t-att-value="int(line.product_qty)" id="input_qty" name="input_qty" maxlength="9"
+                                                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+                                                                            <div class="input-group-append add_qty_shoppinglist js_add_sub_qty">
+                                                                                <a t-attf-href="#" class="btn btn-link float_left js_add_cart_json d-none d-md-inline-block" aria-label="Add one" title="Add one">
+                                                                                    <i class="fa fa-plus"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="td_cart text-right">
+                                                                        <button type="button" class="btn btn-primary fa fa-shopping-cart text-center add_item_cart o_wish_add" />
+                                                                    </td>
+                                                                    <td class="td_remove text-right">
+                                                                        <button type="button" class="btn btn-primary list_action_button_delete delete_item fa fa-trash" />
+                                                                    </td>
+                                                                </tr>
+                                                        
+                                                        </t>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+    
+    <!--Create Shopping List Dialog  -->
+    <template id="create_shopping_list_dialog" name="Create Shopping List Dialog">
+        <div class="modal" role="dialog" tabindex="-1" aria-labelledby="CreateShoppingListModal" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header shopping_list_modal_header">
+                        <h5 class="modal-title" id="CreateShoppingListModal">Create Shopping List</h5>
+                        <button type="button" class="close shopping_list_close" data-dismiss="modal" aria-label="Close">
+                            <span>×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/shopping/list/submit">
+                            <div class="form-group">
+                                <label for="list_name" class="col-form-label">Enter List Name:</label>
+                                <input class="form-control" type="text" name="list_name" id="list_name" required="required" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    <!-- select shopping list dialog -->
+    <template id="add_product_shopping_list" name="Add product in shopping list">
+        <div class="modal" role="dialog" tabindex="-1" aria-labelledby="AddShoppingListModal" data-keyboard="false" data-backdrop="static" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header add_shoppinglist_modal_header">
+                        <h5 class="modal-title" id="AddShoppingListModal">Add product in shopping list</h5>
+                        <button type="button" class="close modal_close add_shoppinglist_close" data-dismiss="modal" aria-label="Close">
+                            <span>×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/add/shopping/list/submit" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                            <input type="hidden" name="product_id" t-att-value="product_id" />
+                            <input type="hidden" name="current_url" t-att-value="current_url" />
+                            <input type="hidden" id="list_record" name="list_record" t-att-value="list_record"/>
+                            <div class="form-group">
+                                <select id="list_id" name="list_id" class="form-control">
+                                    <t t-foreach="shopping_list_ids" t-as="shopping_list">
+                                        <option t-att-value="shopping_list.id">
+                                            <t t-esc="shopping_list.name" />
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="ml-3">Quantiy</div>
+                                    <div class="col-md-8">
+                                        <div class="css_quantity input-group">
+                                            <div class="input-group-prepend sub_qty_shoppinglist">
+                                                <a t-attf-href="#" class="btn btn-secondary">
+                                                    <i class="fa fa-minus"></i>
+                                                </a>
+                                            </div>
+                                            <input type="text" class="form-control text-center input_qty" data-min="1" name="input_qty" t-att-value="input_qty or 1" id="input_qty" maxlength="9" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"  />
+                                            
+                                            <div class="input-group-append add_qty_shoppinglist">
+                                                <a t-attf-href="#" class="btn btn-secondary">
+                                                    <i class="fa fa-plus"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <p id="msg" style="color:red;" />
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn modal_close" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary error_confirm">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    <!-- Remove shopping list -->
+    <template id="remove_shopping_list" name="Remove Shopping List">
+        <div class="modal" role="dialog" tabindex="-1" aria-labelledby="RemoveShoppingListModel" data-keyboard="false" data-backdrop="static" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header remove_model_header">
+                        <h5 class="modal-title" id="RemoveShoppingListModel">Remove Shopping List</h5>
+                        <button type="button" class="close remove_model_close" data-dismiss="modal" aria-label="Close">
+                            <span>×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/remove/list">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                            <input type="hidden" name="list_id" t-att-value="list_id" />
+                            <p>Are you sure you want to delete this shopping list?</p>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+</odoo>
