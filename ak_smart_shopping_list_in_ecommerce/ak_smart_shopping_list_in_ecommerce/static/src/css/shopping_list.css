@@ -1,0 +1,107 @@
+.shopping_list_card{
+	border: none !important;
+}
+
+.shopping_list_card_header{
+    background: #fff;
+    border-bottom: 3px solid #3b908e;
+    margin-bottom: 0px !important;
+}
+.shopping_list_card_body{
+	padding-top: 0rem !important;
+	background-color: #eee !important;
+}
+
+.shopping_list_table{
+	margin-bottom: 0rem !important;
+	border-bottom: 1px solid #3b908e;
+}
+
+.shopping_list_thead{
+	border-bottom: 1px solid #3b908e;
+}
+
+button.accordion_button.collapsed i {
+    transform: rotate(0deg);
+}
+
+button.accordion_button i {
+    transform: rotate(180deg);
+    transition: 0.5s;
+}
+
+@media screen and (max-width: 575px)
+{
+	.list_btn{
+		max-width: 67px;
+	}
+	.product_name{
+		max-width: 165px;
+	}
+
+	.list_button{
+		max-width: 71px;
+	}
+
+	.product_item{
+		max-width: 150px;
+    	text-align: right
+	}
+}
+@media screen and (max-width: 502px)
+{
+	.product_name{
+		max-width: 500px;
+	}
+	.card-body{
+		font-size: 12px;
+	}
+	.td_img{
+		display: none;
+	}
+	.th_product{
+		display: none;
+	}
+
+	.product_item{
+		display: none;
+	}
+	.mobile_product_item{
+		display: block !important;	
+		font-size: 12px;
+	}
+
+}
+
+@media screen and (max-width: 446px)
+{
+	.list_button{
+		padding: 0px !important;
+		margin-inline:  10px;
+	}
+}
+
+@media screen and (max-width: 411px)
+{
+	.list_row{
+		display: none;
+	}
+	.list_area {
+    	max-width: 0px !important;
+    }
+    .mobile_accordian_cart{
+    	display: block !important;
+    	font-size: 12px;
+    	margin: -18px 0px 0px 66px;
+    	color: #3aadaa !important;
+    	cursor: pointer;
+    }
+    .mobile_accordian_delete{
+    	display: block !important;
+    	font-size: 12px;
+    	margin: -18px 0px 0px 138px;
+    	color: #3aadaa !important;
+    	cursor: pointer;
+    }   
+}
+
