@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="website_sale_config_settings_view_form_inherit" model="ir.ui.view">
+        <field name="name">res.config.settings.website.sale.form.inherit</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+        	<xpath expr="//div[@id='hide_add_to_cart_setting']" position="inside">
+        		<div class="col-xs-12 col-md-6 o_setting_box" id="hide_price_setting">
+<!--					<div class="o_setting_left_pane">-->
+<!--	                    <field name="hide_price"/>-->
+<!--	                </div>-->
+<!--	                <div class="o_setting_right_pane">-->
+<!--	                    <label for="hide_price"/>-->
+<!--	                    <div class="text-muted">-->
+<!--	                        Hide Product price-->
+<!--	                    </div>-->
+<!--	                </div>-->
+	                <div class="o_setting_left_pane">
+	                    <field name="cart_hide_price"/>
+	                </div>
+	                <div class="o_setting_right_pane">
+	                    <label for="cart_hide_price"/>
+	                    <div class="text-muted">
+	                        Activate to hide  price
+	                    </div>
+	                </div>
+	                <div class="o_setting_left_pane">
+	                    <field name="optional_product_hide"/>
+	                </div>
+	                <div class="o_setting_right_pane">
+	                    <label for="optional_product_hide"/>
+	                    <div class="text-muted">
+	                        Activate to hide optional product pop-up prices
+	                    </div>
+	                </div>
+	            </div>
+        	</xpath>
+        </field>
+        </record>
+	</data>
+</odoo>
